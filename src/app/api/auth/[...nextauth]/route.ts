@@ -1,5 +1,6 @@
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import jwt from "jsonwebtoken";
 
 const authOptions: AuthOptions = {
   providers: [
@@ -11,26 +12,48 @@ const authOptions: AuthOptions = {
       },
       authorize: async (credentials) => {
         // Call your Spring Boot login API here
-        console.log(credentials);
-
         const res = await fetch("http://localhost:8080/api/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(credentials),
         });
 
-        const user = await res.json();
+        const { token } = await res.json();
+        const decodedToken = jwt.decode(token);
 
-        if (res.ok && user) {
-          // Transform your user object as needed
-          console.log(user);
-          return Promise.resolve(user);
-        } else {
+        if (!res.ok || !decodedToken?.sub) {
           return Promise.resolve(null);
         }
+
+        return Promise.resolve({
+          id: decodedToken.sub,
+          email: decodedToken.sub,
+        }) as any;
       },
     }),
   ],
+  callbacks: {
+    async session({ session, user, token }) {
+      // console.log("----------------");
+      // console.log("[SESSION CALLED]");
+      // console.log("SESSION:", session);
+      // console.log("USER:", user);
+      // console.log("TOKEN:", token);
+      // console.log("----------------");
+      return session;
+    },
+
+    async jwt({ token, user, account, profile }) {
+      // console.log("----------------");
+      // console.log("[JWT CALLED]");
+      // console.log("TOKEN:", token);
+      // console.log("USER:", user);
+      // console.log("ACCOUNT:", account);
+      // console.log("PROFILE:", profile);
+      // console.log("----------------");
+      return token;
+    },
+  },
   session: {
     strategy: "jwt",
   },
