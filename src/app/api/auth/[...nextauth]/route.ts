@@ -34,6 +34,12 @@ const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
   },
+  theme: {
+    colorScheme: "light", // "auto" | "dark" | "light"
+    brandColor: "", // Hex color code
+    logo: "", // Absolute URL to image
+    buttonText: "", // Hex color code
+  },
 };
 
 const handler = NextAuth(authOptions);
