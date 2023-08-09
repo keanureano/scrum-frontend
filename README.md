@@ -1,7 +1,7 @@
 
 # Scrum Frontend
 
-Welcome to the Scrum Frontend repository! This repository contains the frontend component of the Scrum Fullstack Project. The Scrum Frontend is built using Next.js and Tailwind CSS, providing an intuitive and responsive user interface for managing Scrum processes. It offers a user-friendly interface for interacting with Scrum teams, users, tasks, and issues. With its intuitive design and seamless integration with the Scrum Tracker Backend API, the frontend aims to enhance collaboration and streamline project management within a Scrum framework.
+This repository contains the frontend component of the Scrum Fullstack Project. The Scrum Frontend is built using Next.js and Tailwind CSS, providing an intuitive and responsive user interface for managing Scrum processes. It offers a user-friendly interface for interacting with Scrum teams, users, tasks, and issues. With its intuitive design and seamless integration with the Scrum Tracker Backend API, the frontend aims to enhance collaboration and streamline project management within a Scrum framework.
 
 ## Prerequisites
 
