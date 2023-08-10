@@ -1,9 +1,9 @@
-import { User } from "@/components/User";
+import DevTools from "@/components/DevTools";
 
 export default function Home() {
   return (
     <main>
-      <User />
+      <DevTools />
     </main>
   );
 }
