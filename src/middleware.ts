@@ -9,13 +9,13 @@ enum Role {
 interface Token {
   roles: Role[];
 }
+export const config = {
+  matcher: ["/((?!api/auth|auth|_next/static|_next/image|favicon.ico).*)"],
+};
 
-export default withAuth(function middleware() {}, {
+export default withAuth(function middleware() { }, {
   callbacks: {
     authorized: ({ req, token }) => {
-      if (req.nextUrl.pathname.startsWith("/auth")||req.nextUrl.pathname.startsWith("/_next")) {
-        return true;
-      }
 
       const customToken = token as unknown as Token;
 
