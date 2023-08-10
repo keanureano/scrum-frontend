@@ -13,7 +13,7 @@ interface Token {
 export default withAuth(function middleware() {}, {
   callbacks: {
     authorized: ({ req, token }) => {
-      if (req.nextUrl.pathname.startsWith("/auth")) {
+      if (req.nextUrl.pathname.startsWith("/auth")||req.nextUrl.pathname.startsWith("/_next")) {
         return true;
       }
 
