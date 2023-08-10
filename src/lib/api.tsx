@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./authOptions";
 
 const api = axios.create({
-  baseURL: process.env.BACKEND_URL,
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });
 
 api.interceptors.request.use(

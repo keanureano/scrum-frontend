@@ -1,6 +1,7 @@
 import { AuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import axios from "axios";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -11,28 +12,20 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        const LOGIN_URL = `${process.env.BACKEND_URL}/auth/login`;
-
-        const res = await fetch(LOGIN_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(credentials),
-        });
-
-        if (!res.ok || res.status === 403) {
+        const LOGIN_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`;
+        try {
+          const res = await axios.post(LOGIN_URL, credentials);
+          const jwtToken = res.data.token;
+          const jwtPayload = jwt.decode(jwtToken) as JwtPayload;
+          const user = {
+            id: jwtPayload.sub,
+            roles: jwtPayload.roles,
+            token: jwtToken,
+          } as User;
+          return user;
+        } catch (error) {
           return null;
         }
-
-        const jwtToken = (await res.json()).token;
-
-        const jwtPayload = jwt.decode(jwtToken) as JwtPayload;
-
-        const user = {
-          id: jwtPayload.sub,
-          roles: jwtPayload.roles,
-          token: jwtToken,
-        } as User;
-        return user;
       },
     }),
   ],
