@@ -13,10 +13,6 @@ interface Token {
 export default withAuth(function middleware() {}, {
   callbacks: {
     authorized: ({ req, token }) => {
-      if (req.nextUrl.pathname.startsWith("/auth")) {
-        return true;
-      }
-
       const customToken = token as unknown as Token;
 
       if (!customToken) return false;
@@ -35,3 +31,7 @@ export default withAuth(function middleware() {}, {
     },
   },
 });
+
+export const config = {
+  matcher: ["/((?!api|_next|favicon.ico|auth).*)"],
+};

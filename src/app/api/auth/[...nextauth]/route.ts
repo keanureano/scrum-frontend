@@ -23,12 +23,17 @@ const authOptions: AuthOptions = {
           return null;
         }
 
-        const jwtPayload = jwt.decode((await res.json()).token) as JwtPayload;
+        const jwtToken = (await res.json()).token;
+
+        const jwtPayload = jwt.decode(jwtToken) as JwtPayload;
 
         const user = {
           id: jwtPayload.sub,
           roles: jwtPayload.roles,
+          token: jwtToken,
         } as User;
+
+        console.log(user);
 
         return user;
       },
