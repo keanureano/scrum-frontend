@@ -1,11 +1,9 @@
-import Api from "@/components/Api";
-import { User } from "@/components/User";
+import DevTools from "@/components/DevTools";
 
 export default function Home() {
   return (
     <main>
-      <User />
-      <Api />
+      <DevTools />
     </main>
   );
 }
