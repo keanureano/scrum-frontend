@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
 
 export default function SignUpPage() {
   const {
@@ -10,9 +11,38 @@ export default function SignUpPage() {
     formState: { errors },
   } = useForm();
 
+
   const onSubmit = async (data: any) => {
-    console.log(data);
+    fetch("http://localhost:8080/api/auth/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Handle successful response data here
+      console.log("Registration successful", data);
+      alert('User created');
+      signIn("credentials", { ...data, callbackUrl: "/" });
+    })
+    .catch((error) => {
+      // Handle errors here
+      alert(error);
+    });
+
   };
+ 
+  
+
+
+
 
   return (
     <div className="flex justify-center p-20 bg-neutral-300 h-screen">

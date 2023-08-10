@@ -33,7 +33,7 @@ const authOptions: AuthOptions = {
           token: jwtToken,
         } as User;
 
-        console.log(user);
+        console.log(jwtPayload);
 
         return user;
       },
