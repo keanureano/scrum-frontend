@@ -44,6 +44,9 @@ const authOptions: AuthOptions = {
       return { ...token, ...user };
     },
   },
+  pages: {
+    signIn: "/auth/signIn",
+  },
   session: {
     strategy: "jwt",
   },
