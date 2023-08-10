@@ -1,6 +1,6 @@
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth, { AuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 const authOptions: AuthOptions = {
   providers: [
@@ -11,47 +11,37 @@ const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        // Call your Spring Boot login API here
-        const res = await fetch("http://localhost:8080/api/auth/login", {
+        const LOGIN_URL = `${process.env.BACKEND_URL}/auth/login`;
+
+        const res = await fetch(LOGIN_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(credentials),
         });
 
-        const { token } = await res.json();
-        const decodedToken = jwt.decode(token);
-
-        if (!res.ok || !decodedToken?.sub) {
-          return Promise.resolve(null);
+        if (!res.ok || res.status === 403) {
+          return null;
         }
 
-        return Promise.resolve({
-          id: decodedToken.sub,
-          email: decodedToken.sub,
-        }) as any;
+        const jwtPayload = jwt.decode((await res.json()).token) as JwtPayload;
+
+        const user = {
+          id: jwtPayload.sub,
+          roles: jwtPayload.roles,
+        } as User;
+
+        return user;
       },
     }),
   ],
   callbacks: {
-    async session({ session, user, token }) {
-      // console.log("----------------");
-      // console.log("[SESSION CALLED]");
-      // console.log("SESSION:", session);
-      // console.log("USER:", user);
-      // console.log("TOKEN:", token);
-      // console.log("----------------");
+    async session({ session, token }) {
+      session.user = token;
       return session;
     },
 
-    async jwt({ token, user, account, profile }) {
-      // console.log("----------------");
-      // console.log("[JWT CALLED]");
-      // console.log("TOKEN:", token);
-      // console.log("USER:", user);
-      // console.log("ACCOUNT:", account);
-      // console.log("PROFILE:", profile);
-      // console.log("----------------");
-      return token;
+    async jwt({ token, user }) {
+      return { ...token, ...user };
     },
   },
   session: {
