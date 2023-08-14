@@ -1,4 +1,4 @@
-import api from "@/lib/api";
+import api from "@/lib/axiosApi";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
