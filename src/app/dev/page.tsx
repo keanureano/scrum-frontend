@@ -1,17 +1,15 @@
 import api from "@/lib/axiosApi";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
-import Link from "next/link";
 
-export default async function DevTools() {
+export default async function DevPage() {
   const session = await getServerSession(authOptions);
   const { data } = await api.get("/");
 
   return (
-    <>
-      <Link href="/api/auth/signout">Log out</Link>
-      <p>Server Session: {JSON.stringify(session)}</p>
-      <p>API Data: {JSON.stringify(data)}</p>
-    </>
+    <div className="text-xs">
+      <pre>{JSON.stringify(session, null, 1)}</pre>
+      <pre>{JSON.stringify(data, null, 1)}</pre>
+    </div>
   );
 }

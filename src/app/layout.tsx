@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { NextAuthProvider } from "./providers";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,6 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="w-screen min-h-screen bg-neutral-200">
+        <nav className="space-x-4">
+          <Link href="/">Home</Link>
+          <Link href="/dev">Dev</Link>
+          <Link href="/api/auth/signout">Log out</Link>
+        </nav>
         <NextAuthProvider>{children}</NextAuthProvider>
       </body>
     </html>
