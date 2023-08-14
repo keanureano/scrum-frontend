@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SignUpPage() {
   const {
@@ -13,7 +13,9 @@ export default function SignUpPage() {
     watch,
     formState: { errors },
   } = useForm();
+
   const router = useRouter();
+  const errorNotif = useSearchParams().get("error");
 
   const onSubmit = async (data: any) => {
     const REGISTER_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/register`;
@@ -28,7 +30,7 @@ export default function SignUpPage() {
   return (
     <main className="flex items-center justify-center h-screen">
       <form
-        className="max-w-2xl p-8 space-y-4 rounded-lg bg-neutral-50"
+        className="max-w-2xl p-8 rounded-lg bg-neutral-50"
         onSubmit={handleSubmit(onSubmit)}
       >
         <Image
@@ -46,7 +48,9 @@ export default function SignUpPage() {
             type="email"
             {...register("email", { required: true })}
           />
-          {errors.email && <p>*Email is required</p>}
+          <p className={errors.email ? "text-red-900" : "opacity-0"}>
+            Email is required
+          </p>
         </div>
 
         <div>
@@ -56,7 +60,10 @@ export default function SignUpPage() {
             type="text"
             {...register("name", { required: true })}
           />
-          {errors.name && <p>*Name is required</p>}
+
+          <p className={errors.name ? "text-red-900" : "opacity-0"}>
+            Name is required
+          </p>
         </div>
 
         <div>
@@ -66,7 +73,9 @@ export default function SignUpPage() {
             type="password"
             {...register("password", { required: true })}
           />
-          {errors.password && <p>*Password is required</p>}
+          <p className={errors.password ? "text-red-900" : "opacity-0"}>
+            Password is required
+          </p>
         </div>
 
         <div>
@@ -80,11 +89,14 @@ export default function SignUpPage() {
                 value === watch("password") || "Passwords do not match",
             })}
           />
-          {errors.confirmPassword && <p>*Confirm Password is required</p>}
-          {errors.confirmPassword?.type === "validate" && (
-            <p>*Passwords do not match</p>
-          )}
+          <p className={errors.confirmPassword ? "text-red-900" : "opacity-0"}>
+            Passwords do not match
+          </p>
         </div>
+
+        <p className={errorNotif ? "text-red-900" : "opacity-0"}>
+          Register failed, Email already in use
+        </p>
 
         <div className="flex flex-col items-center gap-4 pt-8">
           <button
