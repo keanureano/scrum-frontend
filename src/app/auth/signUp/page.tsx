@@ -11,6 +11,7 @@ export default function SignUpPage() {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -23,6 +24,7 @@ export default function SignUpPage() {
       await axios.post(REGISTER_URL, data);
       signIn("credentials", { ...data, callbackUrl: "/" });
     } catch (error) {
+      reset();
       router.push(`/auth/signUp?error=CredentialsSignup`);
     }
   };
