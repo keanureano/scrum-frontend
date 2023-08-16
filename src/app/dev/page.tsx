@@ -7,7 +7,7 @@ export default async function DevPage() {
   const { data } = await api.get("/");
 
   return (
-    <div className="text-xs">
+    <div className="text-xs p-4">
       <pre>{JSON.stringify(session, null, 1)}</pre>
       <pre>{JSON.stringify(data, null, 1)}</pre>
     </div>

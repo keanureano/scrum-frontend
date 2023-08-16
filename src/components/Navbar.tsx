@@ -5,12 +5,12 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <nav className="flex justify-between p-2 border-b-2 bg-primary-200 border-primary-400">
-      <div className="flex gap-16">
+    <nav className="flex justify-between px-4 py-2 border-b-2 bg-primary-200 border-primary-300">
+      <div className="flex items-center gap-16">
         <Logo />
         <Navigation />
       </div>
-      <div>
+      <div className="flex items-center">
         <button onClick={() => signOut()}>Log out</button>
       </div>
     </nav>
@@ -27,7 +27,16 @@ export function Navigation() {
       name: "Dev",
       href: "/dev",
     },
+    {
+      name: "My Reports",
+      href: "/my-reports",
+    },
+    {
+      name: "Weekly Scrums",
+      href: "/weekly-scrums",
+    },
   ];
+
   const pathname = usePathname();
 
   return (
