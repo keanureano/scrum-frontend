@@ -1,12 +1,60 @@
 import { signOut } from "next-auth/react";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <nav className="space-x-4">
-      <Link href="/">Home</Link>
-      <Link href="/dev">Dev</Link>
-      <button onClick={() => signOut()}>Log out</button>
+    <nav className="flex justify-between p-2 border-b-2 bg-primary-200 border-primary-400">
+      <div className="flex gap-16">
+        <Logo />
+        <Navigation />
+      </div>
+      <div>
+        <button onClick={() => signOut()}>Log out</button>
+      </div>
     </nav>
+  );
+}
+
+export function Navigation() {
+  const navLinks = [
+    {
+      name: "Home",
+      href: "/",
+    },
+    {
+      name: "Dev",
+      href: "/dev",
+    },
+  ];
+  const pathname = usePathname();
+
+  return (
+    <div className="flex gap-8">
+      {navLinks.map((link) => {
+        const isActive = pathname === link.href;
+
+        return (
+          <Link
+            className={`hover:underline decoration-2 ${
+              isActive ? "underline text-amber-800" : ""
+            }`}
+            href={link.href}
+            key={link.name}
+          >
+            {link.name}
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
+function Logo() {
+  return (
+    <Link href="/">
+      <Image src="/logo.png" width={128} height={128 / 4} alt="logo" />
+    </Link>
   );
 }
