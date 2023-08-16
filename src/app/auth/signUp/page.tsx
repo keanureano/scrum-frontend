@@ -11,6 +11,7 @@ export default function SignUpPage() {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -23,6 +24,7 @@ export default function SignUpPage() {
       await axios.post(REGISTER_URL, data);
       signIn("credentials", { ...data, callbackUrl: "/" });
     } catch (error) {
+      reset();
       router.push(`/auth/signUp?error=CredentialsSignup`);
     }
   };
@@ -36,8 +38,8 @@ export default function SignUpPage() {
         <Image
           className="mb-16"
           src="/logo.png"
-          width={432}
-          height={135}
+          width={400}
+          height={400 / 4}
           alt="logo"
         />
 
