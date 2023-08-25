@@ -26,7 +26,9 @@ export const authOptions: AuthOptions = {
           const jwtPayload = jwt.decode(token) as JwtPayload;
 
           const user = {
-            id: jwtPayload.sub,
+            id: jwtPayload.id,
+            email: jwtPayload.email,
+            name: jwtPayload.name,
             roles: jwtPayload.roles,
             token,
           } as User;
