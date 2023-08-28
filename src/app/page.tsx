@@ -17,10 +17,12 @@ async function UserNavList() {
   const team = await fetchTeam();
   return (
     <>
-      <div className="grid justify-items-start " >
+      <div className="grid justify-items-start" >
       <h1>Users: </h1>
       {team.users.map((user: { id: number; name: string; role: string}) => (
-        <button key={user.id}
+        <button 
+        key={user.id}
+        className=" hover:bg-blue-700 font-semibold py-2 px-4 rounded text-blue-500"
         >
           {user.name}
         </button>
