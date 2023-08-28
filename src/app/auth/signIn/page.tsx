@@ -37,7 +37,7 @@ export default function SignInPage() {
           <label className="block text-neutral-600">Email</label>
           <input
             className="w-full p-2 border-2 rounded-lg border-neutral-300 bg-neutral-200"
-            type="email"
+            type="email" 
             {...register("email", { required: true })}
           />
           <p className={errors.email ? "text-red-900" : "opacity-0"}>

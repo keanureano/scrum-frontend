@@ -7,7 +7,7 @@ export default async function HomePage() {
 
   return (
     <main>
-      <h1 className="text-xl">{team.name}</h1>
+      <h1 className="text-xl ml-6">{team.name}</h1>
       <UserNavList/>
     </main>
   );
@@ -16,22 +16,21 @@ export default async function HomePage() {
 async function UserNavList() {
   const team = await fetchTeam();
   return (
-    <>
-      <div className="grid justify-items-start" >
-      <h1>Users: </h1>
-      {team.users.map((user: { id: number; name: string; role: string}) => (
-        <button 
-        key={user.id}
-        className=" hover:bg-blue-700 font-semibold py-2 px-4 rounded text-blue-500"
-        >
-          {user.name}
-        </button>
-      ))}
+    <div className="ml-6 p-2 shadow-lg rounded-lg bg-white mr-100">
+      <h1 className="mb-2 mt-2 ml-2 text-2xl">Users</h1>
+      <div className="grid gap-2 justify-start mb-2 ml-2">
+        {team.users.map((user: { id: number; name: string; role: string}) => (
+          <button 
+            key={user.id}
+            className="block w-full hover:bg-blue-500 font-semibold py-2 px-4 rounded-lg hover:text-white text-blue-500 underline"
+          >
+            {user.name}
+          </button>
+        ))}
       </div>
-    </>
+    </div>
   );
 }
-
 
 async function fetchTeam() {
   const session = (await getServerSession(authOptions)) as any;
