@@ -8,14 +8,28 @@ export default async function HomePage() {
   return (
     <main>
       <h1 className="text-xl">{team.name}</h1>
-      <ul>
-        {team.users.map((user: { id: number; name: string }) => (
-          <li key={user.id}>{user.name}</li>
-        ))}
-      </ul>
+      <UserNavList/>
     </main>
   );
 }
+
+async function UserNavList() {
+  const team = await fetchTeam();
+  return (
+    <>
+      <div className="grid justify-items-start " >
+      <h1>Users: </h1>
+      {team.users.map((user: { id: number; name: string; role: string}) => (
+        <button key={user.id}
+        >
+          {user.name}
+        </button>
+      ))}
+      </div>
+    </>
+  );
+}
+
 
 async function fetchTeam() {
   const session = (await getServerSession(authOptions)) as any;
