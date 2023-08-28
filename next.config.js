@@ -4,8 +4,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/logout",
-        destination: "/api/auth/signOut",
+        source: "/auth/logout",
+        destination: "/api/auth/signout",
       },
     ];
   },
