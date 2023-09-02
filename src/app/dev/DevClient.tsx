@@ -1,14 +1,16 @@
 "use client";
 import axiosClient from "@/lib/axiosClient";
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function DevClient() {
   const session = useSession();
   const [data, setData] = useState();
+  const searchParams = useSearchParams();
 
   async function fetchData() {
-    const response = await axiosClient.get("/");
+    const response = await axiosClient.get(`/${searchParams.get("q") || ""}`);
     setData(response.data);
   }
 
