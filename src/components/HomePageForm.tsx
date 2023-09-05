@@ -82,12 +82,13 @@ export default function HomePageForm({ team }: { team: Team }) {
   }
 
   return (
-    <div className="flex">
-      <div className="flex flex-col items-start">
+    <div className="flex ml-4">
+      <div className="flex flex-col items-start mt-4 ml-2 p-4 bg-white text-blue-500">
+        <b className="text-black mb-2">Users</b>
         <h1>{team.name}</h1>
         {team.users.map((user, index) => (
           <button key={user.id} onClick={() => setSelectedUserIndex(index)}>
-            <p className={selectedUserIndex === index ? "underline" : ""}>
+            <p className={`transition-all ${selectedUserIndex === index ? "underline" : ""} active:hover:bg-blue-500 active:hover:text-white active:rounded-md`}>
               {user.name}
             </p>
           </button>
@@ -279,33 +280,48 @@ function EmailPreview({
   }
 
   return (
-    <div className="flex flex-col h-full justify-between">
+    <div className="flex flex-col h-full justify-between bg-white mt-4">
       <div>
-        <b><h2 className="mb-4">Preview</h2></b> 
-        <pre>{generateEmail()?.subject}</pre>
-        <table className="table-auto" style={{ borderCollapse: 'collapse', width: '100%' }}>
+        <b><h2 className="mb-4 mt-2 ml-2">Preview</h2></b>
+        <table className="table-auto border border-collapse ml-4" style={{ width: '90%' }}>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Yesterday</th>
-              <th>Today</th>
-              <th>Impediments</th>
+              <th className="p-2 border border-3 border-black">Name</th>
+              <th className="p-2 border border-3 border-black">Yesterday</th>
+              <th className="p-2 border border-3 border-black">Today</th>
+              <th className="p-2 border border-3 border-black">Impediments</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><div className=" flex justify-center"><pre>{generateEmail()?.name}</pre></div></td>
-              <td><div className=" flex justify-center"><pre>{generateEmail()?.yesterday}</pre></div></td>
-              <td><div className=" flex justify-center"><pre>{generateEmail()?.today}</pre></div></td>
-              <td><div className=" flex justify-center"><pre>{generateEmail()?.impediments}</pre></div></td>
+              <td className="p-2 border border-3 border-black">
+                <div className="flex justify-center">
+                  <pre>{generateEmail()?.name}</pre>
+                </div>
+              </td>
+              <td className="p-2 border border-3 border-black">
+                <div className="flex justify-center">
+                  <pre>{generateEmail()?.yesterday}</pre>
+                </div>
+              </td>
+              <td className="p-2 border border-3 border-black">
+                <div className="flex justify-center">
+                  <pre>{generateEmail()?.today}</pre>
+                </div>
+              </td>
+              <td className="p-2 border border-3 border-black">
+                <div className="flex justify-center">
+                  <pre>{generateEmail()?.impediments}</pre>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
-        <pre>{generateEmail()?.issues}</pre>
+        <pre className="ml-4">{generateEmail()?.issues}</pre>
       </div>
 
 
-      <div className="flex items-center gap-2">
+      <div className="flex justify-center gap-2 mb-4">
         <button
           className="p-2 rounded bg-secondary-600 text-neutral-200"
           onClick={refreshPreview}
