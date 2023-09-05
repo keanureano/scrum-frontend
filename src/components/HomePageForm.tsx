@@ -220,16 +220,52 @@ function EmailPreview({
 
     const subject = `Stand-up meeting ${new Date().toLocaleDateString()}`;
 
-    const body = `Hi team,\n\n${formData.users
+    const body = `${formData.users
       .map((user) => {
-        return `Name: ${user.name}\n- Tasks Today: ${user.tasksToday}\n- Tasks Yesterday: ${user.tasksYesterday}\n- Impediments: ${user.impediments}`;
+        return `- Tasks Today: ${user.tasksToday}\n- Tasks Yesterday: ${user.tasksYesterday}\n- Impediments: ${user.impediments}`;
       })
       .join("\n\n")}\n\nIssues: ${formData.issues[0].issues || "None"}`;
+
+    const name = `${formData.users
+      .map((user) => {
+        return `${user.name}`;
+      })
+      }`;
+
+    const yesterday = `${formData.users
+      .map((user) => {
+        return `-${user.tasksYesterday}`;
+      })
+      }`;
+
+    const today = `${formData.users
+      .map((user) => {
+        return `-${user.tasksToday}`;
+      })
+      }`;
+
+    const impediments = `${formData.users
+      .map((user) => {
+        return `${user.impediments}`;
+      })
+      }`;
+    const issues = `${formData.users
+      .map((user) => {
+        return;
+      })
+      .join("\n\n")}\n\nIssues: ${formData.issues[0].issues || "None"}`;
+
+
 
     return {
       mailto,
       subject,
+      name,
       body,
+      yesterday,
+      today,
+      impediments,
+      issues,
       href: `mailto:${mailto}?subject=${subject}&body=${encodeURIComponent(
         body
       )}`,
@@ -237,12 +273,32 @@ function EmailPreview({
   }
 
   return (
-    <div className="flex flex-col h-full justify-between">
+    <div className="ml-4 flex flex-col h-full justify-between">
       <div>
         <h2>Preview</h2>
         <pre>{generateEmail()?.subject}</pre>
-        <pre>{generateEmail()?.body}</pre>
+        <table className="table-auto" style={{ borderCollapse: 'collapse', width: '100%' }}>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Yesterday</th>
+              <th>Today</th>
+              <th>Impediments</th>
+              <th>Issues</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div className=" flex justify-center"><pre>{generateEmail()?.name}</pre></div></td>
+              <td><div className=" flex justify-center ml-4"><pre>{generateEmail()?.yesterday}</pre></div></td>
+              <td><div className=" flex justify-center ml-4"><pre>{generateEmail()?.today}</pre></div></td>
+              <td><div className=" flex justify-center ml-4"><pre>{generateEmail()?.impediments}</pre></div></td>
+              <td><div className=" flex justify-center ml-4"><pre>{generateEmail()?.issues}</pre></div></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+
 
       <div className="flex items-center gap-2">
         <button
