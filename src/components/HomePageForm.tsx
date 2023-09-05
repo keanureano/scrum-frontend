@@ -3,6 +3,9 @@ import axiosClient from "@/lib/axiosClient";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
+import { BsDatabaseFillAdd } from 'react-icons/bs'
+import { AiOutlineMail } from 'react-icons/ai'
+import {FiRefreshCcw} from 'react-icons/fi'
 
 interface Team {
   name: string;
@@ -321,25 +324,28 @@ function EmailPreview({
       </div>
 
 
-      <div className="flex justify-center gap-2 mb-4">
+      <div className="flex justify-center gap-3 mb-4">
         <button
-          className="p-2 rounded bg-secondary-600 text-neutral-200"
+          className="p-2 rounded bg-secondary-600 text-neutral-200 flex items-center"
           onClick={refreshPreview}
         >
-          Refresh Preview
+          <span className="mr-2">Refresh Preview</span>
+          <FiRefreshCcw/>
         </button>
         <a
-          className="p-2 bg-secondary-600 text-neutral-200 rounded"
+          className="p-2 rounded bg-secondary-600 text-neutral-200 flex items-center"
           href={generateEmail()?.href}
         >
-          Send Email
+          <span className="mr-2">Send Email</span>
+          <AiOutlineMail />
         </a>
 
         <button
-          className="p-2 rounded bg-secondary-600 text-neutral-200"
+          className="p-2 rounded bg-secondary-600 text-neutral-200 flex items-center"
           onClick={submitToDatabase}
         >
-          Save To Database
+          <span className="mr-2">Save To Database</span>
+          <BsDatabaseFillAdd />
         </button>
       </div>
     </div>
