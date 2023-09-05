@@ -94,20 +94,20 @@ export default function HomePageForm({ team }: { team: Team }) {
         ))}
       </div>
 
-      
+
       <div className="grow">
         <div className="flex m-4 p-4 flex-col gap-8 flex-1 rounded-md border border-neutral-300 bg-neutral-50">
-        {team.users.map((user, index) => (
-          <UserForm
-            key={user.id}
-            teamName={team.name}
-            user={user}
-            isHidden={index !== selectedUserIndex}
-          />
-        ))}
+          {team.users.map((user, index) => (
+            <UserForm
+              key={user.id}
+              teamName={team.name}
+              user={user}
+              isHidden={index !== selectedUserIndex}
+            />
+          ))}
         </div>
-          <div className="flex m-4 p-4 flex-col gap-8 flex-1 rounded-md border border-neutral-300 bg-neutral-50">
-        <IssueForm teamName={team.name} />
+        <div className="flex m-4 p-4 flex-col gap-8 flex-1 rounded-md border border-neutral-300 bg-neutral-50">
+          <IssueForm teamName={team.name} />
         </div>
       </div>
 
@@ -154,9 +154,9 @@ function UserForm({
       <input hidden {...register("email", { required: true })} />
       <label>
         <h4 className="text-neutral-700 font-poppins text-14 font-semibold">
-        Tasks Today
+          Tasks Today
         </h4>
-        <textarea 
+        <textarea
           className="w-full h-36 rounded-md border border-neutral-300 bg-neutral-200 p-4"
           {...register("tasksToday", { required: true })}
         />
@@ -279,9 +279,9 @@ function EmailPreview({
   }
 
   return (
-    <div className="ml-4 flex flex-col h-full justify-between">
+    <div className="flex flex-col h-full justify-between">
       <div>
-        <h2>Preview</h2>
+        <b><h2 className="mb-4">Preview</h2></b> 
         <pre>{generateEmail()?.subject}</pre>
         <table className="table-auto" style={{ borderCollapse: 'collapse', width: '100%' }}>
           <thead>
@@ -290,19 +290,18 @@ function EmailPreview({
               <th>Yesterday</th>
               <th>Today</th>
               <th>Impediments</th>
-              <th>Issues</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><div className=" flex justify-center"><pre>{generateEmail()?.name}</pre></div></td>
-              <td><div className=" flex justify-center ml-4"><pre>{generateEmail()?.yesterday}</pre></div></td>
-              <td><div className=" flex justify-center ml-4"><pre>{generateEmail()?.today}</pre></div></td>
-              <td><div className=" flex justify-center ml-4"><pre>{generateEmail()?.impediments}</pre></div></td>
-              <td><div className=" flex justify-center ml-4"><pre>{generateEmail()?.issues}</pre></div></td>
+              <td><div className=" flex justify-center"><pre>{generateEmail()?.yesterday}</pre></div></td>
+              <td><div className=" flex justify-center"><pre>{generateEmail()?.today}</pre></div></td>
+              <td><div className=" flex justify-center"><pre>{generateEmail()?.impediments}</pre></div></td>
             </tr>
           </tbody>
         </table>
+        <pre>{generateEmail()?.issues}</pre>
       </div>
 
 
