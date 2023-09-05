@@ -94,7 +94,9 @@ export default function HomePageForm({ team }: { team: Team }) {
         ))}
       </div>
 
+      
       <div className="grow">
+        <div className="flex m-4 p-4 flex-col gap-8 flex-1 rounded-md border border-neutral-300 bg-neutral-50">
         {team.users.map((user, index) => (
           <UserForm
             key={user.id}
@@ -103,8 +105,10 @@ export default function HomePageForm({ team }: { team: Team }) {
             isHidden={index !== selectedUserIndex}
           />
         ))}
-
+        </div>
+          <div className="flex m-4 p-4 flex-col gap-8 flex-1 rounded-md border border-neutral-300 bg-neutral-50">
         <IssueForm teamName={team.name} />
+        </div>
       </div>
 
       <div className="grow">
@@ -144,28 +148,30 @@ function UserForm({
 
   return (
     <form className={isHidden ? "hidden" : "flex flex-col"}>
-      <h2>{user.name}</h2>
+      <h1 >{user.name}</h1>
       <input hidden {...register("id", { required: true })} />
       <input hidden {...register("name", { required: true })} />
       <input hidden {...register("email", { required: true })} />
       <label>
+        <h4 className="text-neutral-700 font-poppins text-14 font-semibold">
         Tasks Today
-        <textarea
-          className="w-full"
+        </h4>
+        <textarea 
+          className="w-full h-36 rounded-md border border-neutral-300 bg-neutral-200 p-4"
           {...register("tasksToday", { required: true })}
         />
       </label>
       <label>
         Tasks Yesterday
         <textarea
-          className="w-full"
+          className="w-full h-36 rounded-md border border-neutral-300 bg-neutral-200 p-4"
           {...register("tasksYesterday", { required: true })}
         />
       </label>
       <label>
         Impediments
         <textarea
-          className="w-full"
+          className="w-full h-36 rounded-md border border-neutral-300 bg-neutral-200 p-4"
           {...register("impediments", { required: true })}
         />
       </label>
@@ -190,7 +196,7 @@ function IssueForm({ teamName }: { teamName: string }) {
       <label>
         Issues
         <textarea
-          className="w-full"
+          className="w-full h-36 rounded-md border border-neutral-300 bg-neutral-200 p-4"
           {...register("issues", { required: true })}
         />
       </label>

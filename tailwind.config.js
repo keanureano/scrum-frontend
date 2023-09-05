@@ -13,7 +13,7 @@ module.exports = {
       '4': '24px',
       '5': '32px',
       '6': '48px',
-      '100':'1310px'
+      '100':'1700px'
     },
     extend: {
       colors: {
