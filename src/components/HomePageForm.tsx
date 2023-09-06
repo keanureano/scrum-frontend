@@ -244,19 +244,19 @@ function EmailPreview({
 
     const yesterday = `${formData.users
       .map((user) => {
-        return `Tasks Yesterday: ${user.tasksYesterday}`;
+        return `- Tasks Yesterday: ${user.tasksYesterday}`;
       })
       }`;
 
     const today = `${formData.users
       .map((user) => {
-        return `Tasks Today: ${user.tasksToday}`;
+        return `- Tasks Today: ${user.tasksToday}`;
       })
       }`;
 
     const impediments = `${formData.users
       .map((user) => {
-        return `Impediments: ${user.impediments}`;
+        return `- Impediments: ${user.impediments}`;
       })
       }`;
     const issues = `${formData.users
