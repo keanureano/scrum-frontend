@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
 import { BsDatabaseFillAdd } from 'react-icons/bs'
 import { AiOutlineMail } from 'react-icons/ai'
-import {FiRefreshCcw} from 'react-icons/fi'
+import { FiRefreshCcw } from 'react-icons/fi'
 
 interface Team {
   name: string;
@@ -152,7 +152,7 @@ function UserForm({
 
   return (
     <form className={isHidden ? "hidden" : "flex flex-col"}>
-      <h1 >{user.name}</h1>
+      <h1 className="mb-2 font-bold">{user.name}</h1>
       <input hidden {...register("id", { required: true })} />
       <input hidden {...register("name", { required: true })} />
       <input hidden {...register("email", { required: true })} />
@@ -232,7 +232,7 @@ function EmailPreview({
 
     const body = `${formData.users
       .map((user) => {
-        return `- Tasks Today: ${user.tasksToday}\n- Tasks Yesterday: ${user.tasksYesterday}\n- Impediments: ${user.impediments}`;
+        return `  ${user.name}\n- Tasks Today: ${user.tasksToday}\n- Tasks Yesterday: ${user.tasksYesterday}\n- Impediments: ${user.impediments}`;
       })
       .join("\n\n")}\n\nIssues: ${formData.issues[0].issues || "None"}`;
 
@@ -256,7 +256,7 @@ function EmailPreview({
 
     const impediments = `${formData.users
       .map((user) => {
-        return `${user.impediments}`;
+        return `-${user.impediments}`;
       })
       }`;
     const issues = `${formData.users
@@ -286,40 +286,27 @@ function EmailPreview({
     <div className="flex flex-col h-full justify-between bg-white mt-4">
       <div>
         <b><h2 className="mb-4 mt-2 ml-2">Preview</h2></b>
-        <table className="table-auto border border-collapse ml-4" style={{ width: '90%' }}>
-          <thead>
-            <tr>
-              <th className="p-2 border border-3 border-black">Name</th>
-              <th className="p-2 border border-3 border-black">Yesterday</th>
-              <th className="p-2 border border-3 border-black">Today</th>
-              <th className="p-2 border border-3 border-black">Impediments</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="p-2 border border-3 border-black">
-                <div className="flex justify-center">
-                  <pre>{generateEmail()?.name}</pre>
-                </div>
-              </td>
-              <td className="p-2 border border-3 border-black">
-                <div className="flex justify-center">
-                  <pre>{generateEmail()?.yesterday}</pre>
-                </div>
-              </td>
-              <td className="p-2 border border-3 border-black">
-                <div className="flex justify-center">
-                  <pre>{generateEmail()?.today}</pre>
-                </div>
-              </td>
-              <td className="p-2 border border-3 border-black">
-                <div className="flex justify-center">
-                  <pre>{generateEmail()?.impediments}</pre>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+
+
+
+        <div className="ml-4 mb-2 font-semibold">
+          <pre>{generateEmail()?.name}</pre>
+        </div>
+
+
+        <div className="ml-4">
+          <pre>{generateEmail()?.yesterday}</pre>
+        </div>
+
+
+        <div className="ml-4">
+          <pre>{generateEmail()?.today}</pre>
+        </div>
+
+        <div className="ml-4">
+          <pre>{generateEmail()?.impediments}</pre>
+        </div>
+
         <pre className="ml-4">{generateEmail()?.issues}</pre>
       </div>
 
@@ -330,7 +317,7 @@ function EmailPreview({
           onClick={refreshPreview}
         >
           <span className="mr-2">Refresh Preview</span>
-          <FiRefreshCcw/>
+          <FiRefreshCcw />
         </button>
         <a
           className="p-2 rounded bg-secondary-600 text-neutral-200 flex items-center"
