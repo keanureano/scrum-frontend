@@ -232,31 +232,31 @@ function EmailPreview({
 
     const body = `${formData.users
       .map((user) => {
-        return `  ${user.name}\n- Tasks Today: ${user.tasksToday}\n- Tasks Yesterday: ${user.tasksYesterday}\n- Impediments: ${user.impediments}`;
+        return `Name:  ${user.name}\n- Tasks Today: ${user.tasksToday}\n- Tasks Yesterday: ${user.tasksYesterday}\n- Impediments: ${user.impediments}`;
       })
       .join("\n\n")}\n\nIssues: ${formData.issues[0].issues || "None"}`;
 
     const name = `${formData.users
       .map((user) => {
-        return `${user.name}`;
+        return `Name: ${user.name}`;
       })
       }`;
 
     const yesterday = `${formData.users
       .map((user) => {
-        return `-${user.tasksYesterday}`;
+        return `Tasks Yesterday: ${user.tasksYesterday}`;
       })
       }`;
 
     const today = `${formData.users
       .map((user) => {
-        return `-${user.tasksToday}`;
+        return `Tasks Today: ${user.tasksToday}`;
       })
       }`;
 
     const impediments = `${formData.users
       .map((user) => {
-        return `-${user.impediments}`;
+        return `Impediments: ${user.impediments}`;
       })
       }`;
     const issues = `${formData.users
