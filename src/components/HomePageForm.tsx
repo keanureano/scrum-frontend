@@ -3,13 +3,12 @@ import axiosClient from "@/lib/axiosClient";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
-import { BsDatabaseFillAdd } from 'react-icons/bs'
-import { AiOutlineMail } from 'react-icons/ai'
-import { FiRefreshCcw } from 'react-icons/fi'
+import { BsDatabaseFillAdd } from "react-icons/bs";
+import { AiOutlineMail } from "react-icons/ai";
+import { FiRefreshCcw } from "react-icons/fi";
 
 interface Team {
   name: string;
-  self: string;
   users: User[];
 }
 
@@ -91,13 +90,16 @@ export default function HomePageForm({ team }: { team: Team }) {
         <h1>{team.name}</h1>
         {team.users.map((user, index) => (
           <button key={user.id} onClick={() => setSelectedUserIndex(index)}>
-            <p className={`transition-all ${selectedUserIndex === index ? "underline" : ""} active:hover:bg-blue-500 active:hover:text-white active:rounded-md`}>
+            <p
+              className={`transition-all ${
+                selectedUserIndex === index ? "underline" : ""
+              } active:hover:bg-blue-500 active:hover:text-white active:rounded-md`}
+            >
               {user.name}
             </p>
           </button>
         ))}
       </div>
-
 
       <div className="grow">
         <div className="flex m-4 p-4 flex-col gap-8 flex-1 rounded-md border border-neutral-300 bg-neutral-50">
@@ -236,36 +238,26 @@ function EmailPreview({
       })
       .join("\n\n")}\n\nIssues: ${formData.issues[0].issues || "None"}`;
 
-    const name = `${formData.users
-      .map((user) => {
-        return `Name: ${user.name}`;
-      })
-      }`;
+    const name = `${formData.users.map((user) => {
+      return `Name: ${user.name}`;
+    })}`;
 
-    const yesterday = `${formData.users
-      .map((user) => {
-        return `- Tasks Yesterday: ${user.tasksYesterday}`;
-      })
-      }`;
+    const yesterday = `${formData.users.map((user) => {
+      return `- Tasks Yesterday: ${user.tasksYesterday}`;
+    })}`;
 
-    const today = `${formData.users
-      .map((user) => {
-        return `- Tasks Today: ${user.tasksToday}`;
-      })
-      }`;
+    const today = `${formData.users.map((user) => {
+      return `- Tasks Today: ${user.tasksToday}`;
+    })}`;
 
-    const impediments = `${formData.users
-      .map((user) => {
-        return `- Impediments: ${user.impediments}`;
-      })
-      }`;
+    const impediments = `${formData.users.map((user) => {
+      return `- Impediments: ${user.impediments}`;
+    })}`;
     const issues = `${formData.users
       .map((user) => {
         return;
       })
       .join("\n\n")}\n\nIssues: ${formData.issues[0].issues || "None"}`;
-
-
 
     return {
       mailto,
@@ -285,19 +277,17 @@ function EmailPreview({
   return (
     <div className="flex flex-col h-full justify-between bg-white mt-4">
       <div>
-        <b><h2 className="mb-4 mt-2 ml-2">Preview</h2></b>
-
-
+        <b>
+          <h2 className="mb-4 mt-2 ml-2">Preview</h2>
+        </b>
 
         <div className="ml-4 mb-2 font-semibold">
           <pre>{generateEmail()?.name}</pre>
         </div>
 
-
         <div className="ml-4">
           <pre>{generateEmail()?.yesterday}</pre>
         </div>
-
 
         <div className="ml-4">
           <pre>{generateEmail()?.today}</pre>
@@ -309,7 +299,6 @@ function EmailPreview({
 
         <pre className="ml-4">{generateEmail()?.issues}</pre>
       </div>
-
 
       <div className="flex justify-center gap-3 mb-4">
         <button
