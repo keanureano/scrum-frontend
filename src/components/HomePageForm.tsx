@@ -84,14 +84,13 @@ export default function HomePageForm({ team }: { team: Team }) {
   }
 
   return (
-    <div className="flex ml-4">
-      <div className="flex flex-col items-start mt-4 ml-2 p-4 bg-white text-blue-500">
-        <b className="text-black mb-2">Users</b>
-        <h1>{team.name}</h1>
+    <div className="flex gap-4 p-4">
+      <div className="flex flex-col items-start p-4 border rounded-md border-neutral-300 bg-neutral-50">
+        <p className="mb-2 font-bold">{team.name}</p>
         {team.users.map((user, index) => (
           <button key={user.id} onClick={() => setSelectedUserIndex(index)}>
             <p
-              className={`transition-all ${
+              className={`text-blue-500 decoration-2 transition-all ${
                 selectedUserIndex === index ? "underline" : ""
               } active:hover:bg-blue-500 active:hover:text-white active:rounded-md`}
             >
@@ -102,18 +101,20 @@ export default function HomePageForm({ team }: { team: Team }) {
       </div>
 
       <div className="grow">
-        <div className="flex m-4 p-4 flex-col gap-8 flex-1 rounded-md border border-neutral-300 bg-neutral-50">
-          {team.users.map((user, index) => (
-            <UserForm
-              key={user.id}
-              teamName={team.name}
-              user={user}
-              isHidden={index !== selectedUserIndex}
-            />
-          ))}
-        </div>
-        <div className="flex m-4 p-4 flex-col gap-8 flex-1 rounded-md border border-neutral-300 bg-neutral-50">
-          <IssueForm teamName={team.name} />
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col flex-1 gap-8 p-4 border rounded-md border-neutral-300 bg-neutral-50">
+            {team.users.map((user, index) => (
+              <UserForm
+                key={user.id}
+                teamName={team.name}
+                user={user}
+                isHidden={index !== selectedUserIndex}
+              />
+            ))}
+          </div>
+          <div className="flex flex-col flex-1 p-4 border rounded-md border-neutral-300 bg-neutral-50">
+            <IssueForm teamName={team.name} />
+          </div>
         </div>
       </div>
 
@@ -153,31 +154,31 @@ function UserForm({
   });
 
   return (
-    <form className={isHidden ? "hidden" : "flex flex-col"}>
+    <form className={`flex flex-col ${isHidden ? "hidden" : ""}`}>
       <h1 className="mb-2 font-bold">{user.name}</h1>
       <input hidden {...register("id", { required: true })} />
       <input hidden {...register("name", { required: true })} />
       <input hidden {...register("email", { required: true })} />
       <label>
-        <h4 className="text-neutral-700 font-poppins text-14 font-semibold">
+        <h4 className="font-semibold text-neutral-700 font-poppins text-14">
           Tasks Today
         </h4>
         <textarea
-          className="w-full h-36 rounded-md border border-neutral-300 bg-neutral-200 p-4"
+          className="w-full p-4 border rounded-md h-36 border-neutral-300 bg-neutral-200"
           {...register("tasksToday", { required: true })}
         />
       </label>
       <label>
         Tasks Yesterday
         <textarea
-          className="w-full h-36 rounded-md border border-neutral-300 bg-neutral-200 p-4"
+          className="w-full p-4 border rounded-md h-36 border-neutral-300 bg-neutral-200"
           {...register("tasksYesterday", { required: true })}
         />
       </label>
       <label>
         Impediments
         <textarea
-          className="w-full h-36 rounded-md border border-neutral-300 bg-neutral-200 p-4"
+          className="w-full p-4 border rounded-md h-36 border-neutral-300 bg-neutral-200"
           {...register("impediments", { required: true })}
         />
       </label>
@@ -202,7 +203,7 @@ function IssueForm({ teamName }: { teamName: string }) {
       <label>
         Issues
         <textarea
-          className="w-full h-36 rounded-md border border-neutral-300 bg-neutral-200 p-4"
+          className="w-full p-4 border rounded-md h-36 border-neutral-300 bg-neutral-200"
           {...register("issues", { required: true })}
         />
       </label>
@@ -232,42 +233,16 @@ function EmailPreview({
 
     const subject = `Stand-up meeting ${new Date().toLocaleDateString()}`;
 
-    const body = `${formData.users
+    const body = `Hi team,\n\n${formData.users
       .map((user) => {
-        return `Name:  ${user.name}\n- Tasks Today: ${user.tasksToday}\n- Tasks Yesterday: ${user.tasksYesterday}\n- Impediments: ${user.impediments}`;
-      })
-      .join("\n\n")}\n\nIssues: ${formData.issues[0].issues || "None"}`;
-
-    const name = `${formData.users.map((user) => {
-      return `Name: ${user.name}`;
-    })}`;
-
-    const yesterday = `${formData.users.map((user) => {
-      return `- Tasks Yesterday: ${user.tasksYesterday}`;
-    })}`;
-
-    const today = `${formData.users.map((user) => {
-      return `- Tasks Today: ${user.tasksToday}`;
-    })}`;
-
-    const impediments = `${formData.users.map((user) => {
-      return `- Impediments: ${user.impediments}`;
-    })}`;
-    const issues = `${formData.users
-      .map((user) => {
-        return;
+        return `Name: ${user.name}\n- Tasks Today: ${user.tasksToday}\n- Tasks Yesterday: ${user.tasksYesterday}\n- Impediments: ${user.impediments}`;
       })
       .join("\n\n")}\n\nIssues: ${formData.issues[0].issues || "None"}`;
 
     return {
       mailto,
       subject,
-      name,
       body,
-      yesterday,
-      today,
-      impediments,
-      issues,
       href: `mailto:${mailto}?subject=${subject}&body=${encodeURIComponent(
         body
       )}`,
@@ -275,41 +250,29 @@ function EmailPreview({
   }
 
   return (
-    <div className="flex flex-col h-full justify-between bg-white mt-4">
-      <div>
-        <b>
-          <h2 className="mb-4 mt-2 ml-2">Preview</h2>
-        </b>
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col justify-between gap-16 p-4 border rounded-md border-neutral-300 bg-neutral-50">
+        <div>
+          <h2 className="my-2 font-bold">Preview</h2>
 
-        <div className="ml-4 mb-2 font-semibold">
-          <pre>{generateEmail()?.name}</pre>
+          <div className="border rounded-md bg-neutral-100 border-neutral-200 p-4 font-medium">
+            <pre className="mb-4 font-sans font-semibold">
+              {generateEmail()?.subject}
+            </pre>
+            <pre className="font-sans">{generateEmail()?.body}</pre>
+          </div>
         </div>
-
-        <div className="ml-4">
-          <pre>{generateEmail()?.yesterday}</pre>
-        </div>
-
-        <div className="ml-4">
-          <pre>{generateEmail()?.today}</pre>
-        </div>
-
-        <div className="ml-4">
-          <pre>{generateEmail()?.impediments}</pre>
-        </div>
-
-        <pre className="ml-4">{generateEmail()?.issues}</pre>
       </div>
-
-      <div className="flex justify-center gap-3 mb-4">
+      <div className="flex justify-end gap-3">
         <button
-          className="p-2 rounded bg-secondary-600 text-neutral-200 flex items-center"
+          className="flex items-center p-2 rounded-lg bg-secondary-600 text-neutral-200"
           onClick={refreshPreview}
         >
           <span className="mr-2">Refresh Preview</span>
           <FiRefreshCcw />
         </button>
         <a
-          className="p-2 rounded bg-secondary-600 text-neutral-200 flex items-center"
+          className="flex items-center p-2 rounded-lg bg-secondary-600 text-neutral-200"
           href={generateEmail()?.href}
         >
           <span className="mr-2">Send Email</span>
@@ -317,7 +280,7 @@ function EmailPreview({
         </a>
 
         <button
-          className="p-2 rounded bg-secondary-600 text-neutral-200 flex items-center"
+          className="flex items-center p-2 rounded-lg bg-secondary-600 text-neutral-200"
           onClick={submitToDatabase}
         >
           <span className="mr-2">Save To Database</span>
