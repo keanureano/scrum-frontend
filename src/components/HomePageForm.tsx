@@ -69,6 +69,10 @@ export default function HomePageForm({ team }: { team: Team }) {
         }
       });
 
+    if (issues.length === 0) {
+      issues.push({ issues: "" });
+    }
+
     const data = {
       users,
       issues,
